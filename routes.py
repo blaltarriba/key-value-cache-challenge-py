@@ -11,7 +11,6 @@ cache = Cache(item_repository=item_repository)
 
 @router.get("/fetch/{item_code}")
 def fetch_item(item_code: str) -> Item:
-
     item = cache.fetch(item_code)
 
     if not item:
