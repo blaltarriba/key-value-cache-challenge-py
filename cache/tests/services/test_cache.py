@@ -8,10 +8,6 @@ from cache.repositories.item_cached_repository import ItemCachedRepository
 class TestCache:
 
     @pytest.fixture
-    def an_item(self) -> Item:
-        return Item(code='a_code', description='a_description')
-
-    @pytest.fixture
     def an_item_repository(self, an_item) -> ItemRepository:
         return ItemRepository(items={ an_item.code: an_item })
 
@@ -44,9 +40,8 @@ class TestCache:
         item_cached_repository_spy.assert_called_once()
         assert result.code == an_item.code
 
-    def test_fetch_item_retrieve_from_cache_when_exists(self, an_item: Item, an_item_repository: ItemRepository, mocker: MockerFixture) -> None:
-        item_cached_repository_with_item = ItemCachedRepository(items={ an_item.code: an_item })
-        cache_service = Cache(item_repository=an_item_repository, item_cached_repository=item_cached_repository_with_item)
+    def test_fetch_item_retrieve_from_cache_when_exists(self, an_item: Item, an_item_repository: ItemRepository, an_item_cached_repository_with_item: ItemCachedRepository,mocker: MockerFixture) -> None:
+        cache_service = Cache(item_repository=an_item_repository, item_cached_repository=an_item_cached_repository_with_item)
         item_repository_spy = mocker.spy(ItemRepository, 'getById')
 
         result = cache_service.fetch(an_item.code)

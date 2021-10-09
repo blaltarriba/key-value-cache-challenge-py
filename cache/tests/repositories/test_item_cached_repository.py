@@ -9,18 +9,14 @@ class TestItemCachedRepository:
     def an_item(self) -> Item:
         return Item(code='a_code', description='a_description')
 
-    @pytest.fixture
-    def an_item_cached_repository(self, an_item: Item) -> ItemCachedRepository:
-        return ItemCachedRepository(items={an_item.code: an_item})
-
-    def test_getById_return_item_when_exists(self, an_item: Item, an_item_cached_repository: ItemCachedRepository) -> None:
-        result = an_item_cached_repository.getById(an_item.code)
+    def test_getById_return_item_when_exists(self, an_item: Item, an_item_cached_repository_with_item: ItemCachedRepository) -> None:
+        result = an_item_cached_repository_with_item.getById(an_item.code)
 
         assert result.code == an_item.code
         assert result.description == an_item.description
 
-    def test_getById_item_return_none_when_does_not_exists(self, an_item_cached_repository: ItemCachedRepository) -> None:
-        result = an_item_cached_repository.getById('fake')
+    def test_getById_item_return_none_when_does_not_exists(self, an_item_cached_repository_with_item: ItemCachedRepository) -> None:
+        result = an_item_cached_repository_with_item.getById('fake')
 
         assert result is None
 
