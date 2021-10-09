@@ -6,7 +6,7 @@ from starlette.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_422_UNPROCESS
 from cache.models.item import Item
 
 
-class TestCleaningsRoutes:
+class TestCacheRoutes:
 
     def test_get_item_return_item_when_exists(self, client: TestClient) -> None:
         expected_item = Item(code='a_code', description='a_description')
