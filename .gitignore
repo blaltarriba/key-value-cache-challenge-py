@@ -1,0 +1,9 @@
+# virtualenv
+.venv
+venv/
+
+# PyCharm
+.idea/
+
+.pytest_cache/
+__pycache__/
