@@ -2,6 +2,7 @@ import pytest
 from cache.models.item import Item
 from cache.services.cache import Cache
 from cache.repositories.item_repository import ItemRepository
+from cache.repositories.item_cached_repository import ItemCachedRepository
 
 class TestCache:
 
@@ -14,8 +15,12 @@ class TestCache:
         return ItemRepository(items={ an_item.code: an_item })
 
     @pytest.fixture
-    def a_cache_service(self, an_item_repository):
-        return Cache(item_repository=an_item_repository)
+    def an_item_cached_repository(self, an_item):
+        return ItemCachedRepository(items={})
+
+    @pytest.fixture
+    def a_cache_service(self, an_item_repository, an_item_cached_repository):
+        return Cache(item_repository=an_item_repository, item_cached_repository=an_item_cached_repository)
 
     def test_fecth_item_return_item_when_exists(self, a_cache_service: Cache, an_item: Item) -> None:
 
@@ -29,3 +34,5 @@ class TestCache:
         result = a_cache_service.fetch('fake')
 
         assert result is None
+
+    
