@@ -6,7 +6,7 @@ from cache.repositories.item_repository import ItemRepository
 from cache.repositories.item_cached_repository import ItemCachedRepository
 
 router = APIRouter()
-item_repository = ItemRepository()
+item_repository = ItemRepository(items = { 'a_code': Item(code='a_code', description='a_description') })
 item_cached_repository = ItemCachedRepository()
 cache = Cache(item_repository=item_repository, item_cached_repository=item_cached_repository)
 

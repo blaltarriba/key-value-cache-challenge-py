@@ -10,9 +10,11 @@ class Cache():
     def fetch(self, code: str) -> Item:
         item = self.item_cached_repository.getById(code)
         if item:
+            print ('Already in cache')
             return item
 
         item = self.item_repository.getById(code)
         if item:
             self.item_cached_repository.persist(item)
+            print ('Stored in cache')
         return item
