@@ -8,5 +8,11 @@ class Cache():
         self.item_cached_repository = item_cached_repository
 
     def fetch(self, code: str) -> Item:
+        item = self.item_cached_repository.getById(code)
+        if item:
+            return item
+
         item = self.item_repository.getById(code)
+        if item:
+            self.item_cached_repository.persist(item)
         return item
