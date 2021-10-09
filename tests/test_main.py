@@ -8,16 +8,16 @@ from cache.models.item import Item
 
 class TestCleaningsRoutes:
 
-    def test_health_returns_200(self, client: TestClient) -> None:
-        response = client.get("/")
-
-        assert response.status_code == 200
-        assert response.json() == {"Hello": "World"}
-
-    def test_get_item_return_item(self, client: TestClient) -> None:
+    def test_get_item_return_item_when_exists(self, client: TestClient) -> None:
         expected_item = Item(code='a_code', description='a_description')
 
         response = client.get("/fetch/a_code")
 
-        assert response.status_code == 200
+        assert response.status_code == HTTP_200_OK
         assert response.json() == {"code": "a_code", "description": "a_description"}
+
+    def test_get_item_does_not_return_item_when_not_exists(self, client: TestClient) -> None:
+
+        response = client.get("/fetch/fake_code")
+
+        assert response.status_code == HTTP_404_NOT_FOUND

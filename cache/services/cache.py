@@ -1,11 +1,11 @@
 from cache.models.item import Item
+from cache.repositories.item_repository import ItemRepository
 
 
 class Cache():
-    items: dict[str, Item] = {}
+    def __init__(self, item_repository: ItemRepository):
+        self.item_repository = item_repository
 
     def fetch(self, code: str) -> Item:
-        item = self.items.get(code)
-        if item:
-            return item
-        return Item(code=code, description='a_description')
+        item = self.item_repository.getById(code)
+        return item
