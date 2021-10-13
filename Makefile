@@ -23,8 +23,8 @@ env-recreate: env-stop build env-start
 
 env-restart: env-stop env-start
 
-install-test-requirements: ## Install all test dependencies
-	$(DOCKER_COMMAND) exec -it $(CONTAINER_NAME) pip install --disable-pip-version-check -r ../requirements/test.txt
+test: ## Run test suite in project's main container
+	docker exec -it $(CONTAINER_NAME) pytest -vv
 
 bash: ## Open a bash shell in project's main container
 	docker exec -it ${CONTAINER_NAME} bash
